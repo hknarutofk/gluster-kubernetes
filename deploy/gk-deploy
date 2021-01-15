@@ -872,7 +872,7 @@ if [[ ${EXISTS_DEPLOY_HEKETI} -eq 1 ]] && [[ ${EXISTS_HEKETI} -eq 0 ]]; then
     exit 1
   fi
 
-  eval_output "${CLI} exec -i ${heketi_pod} -- cat /tmp/heketi-storage.json | ${CLI} create -f - 2>&1"
+  eval_output "${CLI} exec -i ${heketi_pod} -- cat /tmp/heketi-storage.json | sed 's/heketi\/heketi:dev/registry.cn-hangzhou.aliyuncs.com\/hknaruto\/heketi-arm64:v10.2.0/g' | ${CLI} create -f - 2>&1"
   if [[ ${?} != 0 ]]; then
     output "Failed on creating heketi storage resources."
     exit 1
@@ -921,7 +921,8 @@ while [[ "x${heketi_service}" == "x" ]] || [[ "${heketi_service}" == "<none>" ]]
   heketi_service=$(${CLI} describe svc/heketi | grep "Endpoints:" | awk '{print $2}')
 done
 
-heketi_pod=$(${CLI} get pod --no-headers --show-all --selector="heketi" | awk '{print $1}')
+# heketi_pod=$(${CLI} get pod --no-headers --show-all --selector="heketi" | awk '{print $1}')
+heketi_pod=$(${CLI} get pod --no-headers --selector="heketi" | awk '{print $1}')
 
 if [[ "${CLI}" == *oc\ * ]]; then
   heketi_service=$(${CLI} describe routes/heketi | grep "Requested Host:" | awk '{print $3}')
@@ -952,7 +953,7 @@ use it from within the heketi pod:
 For dynamic provisioning, create a StorageClass similar to this:
 
 ---
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: glusterfs-storage

@@ -1,6 +1,6 @@
 ---
 kind: DaemonSet
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: glusterfs
   labels:
@@ -9,6 +9,10 @@ metadata:
     description: GlusterFS DaemonSet
     tags: glusterfs
 spec:
+  selector:
+    matchLabels:
+      glusterfs: pod
+      glusterfs-node: pod
   template:
     metadata:
       name: glusterfs
@@ -20,8 +24,8 @@ spec:
         storagenode: glusterfs
       hostNetwork: true
       containers:
-      - image: gluster/gluster-centos:latest
-        imagePullPolicy: IfNotPresent
+      - image: registry.cn-hangzhou.aliyuncs.com/hknaruto/glusterfs-gluster_centos-arm64:latest
+        imagePullPolicy: Always
         name: glusterfs
         env:
         # alternative for /dev volumeMount to enable access to *all* devices

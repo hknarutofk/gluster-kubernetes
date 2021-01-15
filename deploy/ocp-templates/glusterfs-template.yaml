@@ -33,7 +33,7 @@ objects:
           storagenode: ${NODE_LABEL}
         hostNetwork: true
         containers:
-        - image: gluster/gluster-centos:latest
+        - image: registry.cn-hangzhou.aliyuncs.com/hknaruto/glusterfs-gluster_centos-arm64:latest
           imagePullPolicy: IfNotPresent
           name: glusterfs
           env:

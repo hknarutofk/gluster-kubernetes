@@ -64,7 +64,7 @@ objects:
         serviceAccountName: heketi-service-account
         containers:
         - name: deploy-heketi
-          image: heketi/heketi:dev
+          image: registry.cn-hangzhou.aliyuncs.com/hknaruto/heketi-arm64:v10.2.0
           imagePullPolicy: IfNotPresent
           env:
           - name: HEKETI_USER_KEY
