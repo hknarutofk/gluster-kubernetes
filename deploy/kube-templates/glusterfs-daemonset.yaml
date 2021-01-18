@@ -136,3 +136,7 @@ spec:
       - name: kernel-modules
         hostPath:
           path: "/lib/modules"
+      tolerations:
+        - key: glusterfs
+          operator: Exists
+          effect: NoSchedule
