@@ -2,6 +2,9 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: glusterfs-storage
+  annotations: 
+    # 由于系统存在其他默认存储，此处设置为false（默认也是false）
+    storageclass.kubernetes.io/is-default-class: "false"
 provisioner: kubernetes.io/glusterfs
 parameters:
   resturl: "http://10.68.247.23:8080"
