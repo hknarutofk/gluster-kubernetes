@@ -7,7 +7,4 @@ parameters:
   resturl: "http://10.68.247.23:8080"
   restuser: "admin"
   restuserkey: "admin"
-  # 以下是默认值，如果是单节点glusterfs，这是volumetype: none
-  volumetype: replicate:3
-
-
+  volumetype: none
